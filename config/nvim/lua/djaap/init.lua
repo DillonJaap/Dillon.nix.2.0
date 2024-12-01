@@ -1,6 +1,6 @@
 -- Map <leader> to space
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -17,8 +17,7 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 local opts = {}
-require('lazy').setup('plugins', opts)
+require("lazy").setup("plugins", opts)
 
-require('djaap.settings')
-require('djaap.keybindings')
-require("flutter-tools").setup {} -- use defaults
+require("djaap.settings")
+require("djaap.keybindings")

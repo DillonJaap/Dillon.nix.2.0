@@ -11,25 +11,11 @@ in
   home.stateVersion = "23.11";
   home.packages = with pkgs; [
     go
-    cargo
     fzf
     eza
     ripgrep
     skate
     #    nerdfonts
-    luarocks
-    php
-    (lib.recursiveUpdate php83Packages.composer { meta.priority = php83Packages.composer.meta.priority or 0 - 1; })
-    ocaml
-    flutter
-    cmake
-    clang
-    glibc
-    glib
-    libclang
-    android-studio
-    pkg-config
-    gtk3
   ];
 
   xdg.configFile = {
