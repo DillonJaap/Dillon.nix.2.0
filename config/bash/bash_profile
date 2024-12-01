@@ -1,0 +1,19 @@
+#!/bin/bash
+
+export PATH=~/go/bin:~/bin:$PATH
+export PATH="~/.scripts:$PATH"
+export PATH="$PATH:/Users/DJaap/Library/Python/3.9/bin"
+export PATH="$PATH:/Users/DJaap/.config/herd-lite/bin"
+source ~/.bashrc
+
+
+# opam configuration
+test -r /Users/DJaap/.opam/opam-init/init.sh && . /Users/DJaap/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+test -r $HOME/.opam/opam-init/init.sh && . $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+
+# start X11 on linux
+#[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
+
+# Added by Toolbox App
+export PATH="$PATH:/Users/DJaap/Library/Application Support/JetBrains/Toolbox/scripts"
+export PATH="~/development/flutter/bin:$PATH"
