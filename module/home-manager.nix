@@ -8,14 +8,14 @@ in
 {
   home.homeDirectory = homeDirectory;
   home.username = username;
-  home.stateVersion = "23.11";
+  home.stateVersion = "24.11";
   home.packages = with pkgs; [
     go
     fzf
     eza
     ripgrep
     skate
-    #    nerdfonts
+    ghostty
   ];
 
   xdg.configFile = {
