@@ -41,14 +41,29 @@
                 pkgs = import nixpkgs { system = "x86_64-linux"; config.android_sdk.accept_license = true; config.allowUnfree = true; };
                 #pkgs = nixpkgs.legacyPackages.${system};
               };
-            darwinManagerModule = import ./system/darwin.nix {
-              inherit inputs;
+            darwinManagerModule = import ./system/hhome-manager.nix {
               username = "DJaap";
               homeDirectory = "/home/DJaap";
             };
-            darwinManager = system:
-              home-manager.lib.homeManagerConfiguration {
-                modules = [ darwinManagerModule ];
+            darwinManager =
+              inputs.darwin.lib.darwinSystem {
+                system = "aarch64-darwin";
+                modules = [
+                  {
+                    services.nix-daemon.enable = true;
+                    users.users.DJaap.home = "/Users/DJaap";
+                  }
+                  #system-config
+
+                  inputs.home-manager.darwinModules.home-manager
+                  {
+                    # add home-manager settings here
+                    home-manager.useGlobalPkgs = true;
+                    home-manager.useUserPackages = true;
+                    home-manager.users."DJaap" = darwinManagerModule;
+                  }
+                  # add more nix modules here
+                ];
                 pkgs = import nixpkgs { system = "aarch-darwin"; config.allowUnfree = true; };
               };
 
