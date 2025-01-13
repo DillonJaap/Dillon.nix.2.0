@@ -5,6 +5,9 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
+    darwin.url = "github:lnl7/nix-darwin";
+
   };
 
   outputs =
@@ -12,6 +15,7 @@
     , flake-parts
     , home-manager
     , nixpkgs
+    , darwin
     , ...
     }:
     flake-parts.lib.mkFlake { inherit inputs; } {
@@ -37,11 +41,22 @@
                 pkgs = import nixpkgs { system = "x86_64-linux"; config.android_sdk.accept_license = true; config.allowUnfree = true; };
                 #pkgs = nixpkgs.legacyPackages.${system};
               };
+            darwinManagerModule = import ./system/darwin.nix {
+              inherit inputs;
+              username = "DJaap";
+              homeDirectory = "/home/DJaap";
+            };
+            darwinManager = system:
+              home-manager.lib.homeManagerConfiguration {
+                modules = [ darwinManagerModule ];
+                pkgs = import nixpkgs { system = "aarch-darwin"; config.allowUnfree = true; };
+              };
+
           in
           {
-            aarch64-darwin = homeManager "aarch64-darwin";
+            aarch64-darwin = darwinManager "aarch64-darwin";
+            x86_64-darwin = darwinManager "x86_64-darwin";
             aarch64-linux = homeManager "aarch64-linux";
-            x86_64-darwin = homeManager "x86_64-darwin";
             x86_64-linux = homeManager "x86_64-linux";
           };
       };
