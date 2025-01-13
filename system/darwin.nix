@@ -3,7 +3,7 @@
 , homeDirectory
 }: system:
 let
-  # system-config = import ../module/configuration.nix;
+  system-config = import ../module/configuration.nix;
   home-manager-config = import ../module/home-manager.nix {
     homeDirectory = "/home/djaap";
     username = "djaap";
@@ -17,7 +17,7 @@ inputs.darwin.lib.darwinSystem {
       services.nix-daemon.enable = true;
       users.users.${username}.home = "/Users/${username}";
     }
-    #system-config
+    system-config
 
     inputs.home-manager.darwinModules.home-manager
     {
