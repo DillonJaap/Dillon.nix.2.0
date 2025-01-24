@@ -1,21 +1,17 @@
-{ homeDirectory
-, username
-,
-}: { pkgs, config, ... }:
+{ pkgs, config, ... }:
 let
   symLink = config.lib.file.mkOutOfStoreSymlink;
 in
 {
-  home.homeDirectory = homeDirectory;
-  home.username = username;
-  home.stateVersion = "24.11";
+  #home.homeDirectory = homeDirectory;
+  #home.username = username;
+  home.stateVersion = "24.05";
   home.packages = with pkgs; [
     go
     fzf
     eza
     ripgrep
     skate
-    ghostty
 		ocaml
 		opam
   ];

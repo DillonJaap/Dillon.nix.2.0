@@ -1,49 +1,40 @@
 {
-  description = "Example kickstart Home Manager environment.";
+  description = "Example kickstart Nix on macOS environment.";
 
   inputs = {
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    darwin = {
+      url = "github:lnl7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs =
-    inputs @ { self
-    , flake-parts
-    , home-manager
-    , nixpkgs
-    , ...
-    }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
-      perSystem =
-        { config
-        , self'
-        , inputs'
-        , pkgs
-        , system
-        , ...
-        }: { };
-      flake = {
-        homeConfigurations =
-          let
-            homeManagerModule = import ./module/home-manager.nix {
-              homeDirectory = "/home/djaap";
-              username = "djaap";
-            };
-            homeManager = system:
-              home-manager.lib.homeManagerConfiguration {
-                modules = [ homeManagerModule ];
-                pkgs = import nixpkgs { system = "x86_64-linux"; config.android_sdk.accept_license = true; config.allowUnfree = true; };
-                #pkgs = nixpkgs.legacyPackages.${system};
-              };
-          in
-          {
-            aarch64-darwin = homeManager "aarch64-darwin";
-            aarch64-linux = homeManager "aarch64-linux";
-            x86_64-darwin = homeManager "x86_64-darwin";
-            x86_64-linux = homeManager "x86_64-linux";
-          };
+  outputs = inputs@{ self, darwin, home-manager, nixpkgs, ... }:
+    let
+      darwin-system = import ./system/darwin.nix {
+        inherit inputs;
+        username = "DJaap";
       };
+      #linux-system = import ./system/nixos.nix {
+      #inherit inputs;
+      #username = "dillon";
+      #password = "temppass";
+      #};
+    in
+    {
+      darwinConfigurations = {
+        aarch64 = darwin-system "aarch64-darwin";
+        x86_64 = darwin-system "x86_64-darwin";
+      };
+      #nixosConfigurations = {
+      #aarch64 = linux-system "aarch64-linux";
+      #x86_64 = linux-system "x86_64-linux";
+      #};
     };
 }

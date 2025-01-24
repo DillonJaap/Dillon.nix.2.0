@@ -5,29 +5,7 @@ local o = vim.o
 o.syntax = 'enable'
 o.background = 'dark'
 o.termguicolors = true
---g.gruvbox_material_background = 'soft'
---g.neon_style = "light"
-
-
-
---[[
-require("cyberdream").setup({
-	theme = {
-		variant = "light",
-	}
-})
-local cyberdream = require("lualine.themes.cyberdream-light") -- or require("lualine.themes.cyberdream-light") for the light variant
-require("lualine").setup({
-	-- ... other config
-	options = {
-		theme = "cyberdream",
-	},
-	-- ... other config
-})
---vim.cmd('colorscheme cyberdream')
---]]
-
-vim.cmd('colorscheme rose-pine-moon')
+vim.cmd('colorscheme gruvbuddy')
 
 -- Misc Visuals
 o.cursorline = true
@@ -40,7 +18,9 @@ o.number = true
 
 -- Splits
 o.splitright = true
+
 o.splitbelow = true
+
 
 -- Searching
 o.hlsearch = true
