@@ -16,6 +16,8 @@ in
     ripgrep
     skate
     ghostty
+		ocaml
+		opam
   ];
 
   xdg.configFile = {
@@ -26,6 +28,10 @@ in
     scripts = {
       source = symLink ../config/scripts;
       target = "../.scripts/";
+      recursive = true;
+    };
+    kitty = {
+      source = symLink ../config/kitty;
       recursive = true;
     };
   };
@@ -41,11 +47,11 @@ in
       userEmail = "dillonjaap@gmail.com";
       userName = "dillon";
     };
-    kitty = {
-      enable = true;
-      shellIntegration.enableBashIntegration = true;
-      extraConfig = builtins.readFile ../config/kitty/kitty.conf;
-    };
+     # kitty = {
+     #   enable = true;
+     #   shellIntegration.enableBashIntegration = true;
+     #   extraConfig = builtins.readFile ../config/kitty/kitty.conf;
+     # };
     fzf = {
       enable = true;
       enableBashIntegration = true;
