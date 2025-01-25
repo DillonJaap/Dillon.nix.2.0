@@ -23,7 +23,7 @@
 		};
 	linux-system = import ./system/linux.nix {
 		inherit inputs;
-		username = "dillon";
+		username = "djaap";
 	};
 	in
 	{
@@ -31,7 +31,7 @@
 			aarch64 = darwin-system "aarch64-darwin";
 			x86_64 = darwin-system "x86_64-darwin";
 		};
-		linuxConfigurations = {
+		homeConfigurations = {
 #aarch64 = linux-system "aarch64-linux";
 			x86_64 = linux-system "x86_64-linux";
 		};
