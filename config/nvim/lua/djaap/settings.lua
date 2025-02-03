@@ -5,7 +5,8 @@ local o = vim.o
 o.syntax = 'enable'
 o.background = 'dark'
 o.termguicolors = true
-vim.cmd('colorscheme gruvbuddy')
+vim.cmd([[let g:gruvbox_material_background = 'meduim']])
+vim.cmd('colorscheme gruvbox-material')
 
 -- Misc Visuals
 o.cursorline = true
