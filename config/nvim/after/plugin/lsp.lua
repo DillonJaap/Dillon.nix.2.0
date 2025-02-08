@@ -129,7 +129,10 @@ require("lspconfig").sqlls.setup({
 	filetypes = { "sql", "mysql", "sql.tmpl" },
 })
 
-require("lspconfig").ocamllsp.setup({})
+require("lspconfig").ocamllsp.setup({
+	manual_install = true,
+	cmd = { "dune", "tools", "exec", "ocamllsp" },
+})
 
 require("lspconfig").html.setup({
 	filetypes = { "templ", "html" },
