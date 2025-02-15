@@ -14,6 +14,7 @@ in
     skate
 		ocaml
 		opam
+		nushell
 		# nerdfonts
   ];
 

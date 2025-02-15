@@ -160,6 +160,8 @@ require("lspconfig").volar.setup({
 	},
 })
 
+require("lspconfig").rescriptls.setup({})
+
 require("lspconfig").ts_ls.setup({
 	init_options = {
 		plugins = {
