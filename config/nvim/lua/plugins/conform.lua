@@ -10,9 +10,9 @@ return {
 			},
 			formatters_by_ft = {
 				lua = { "stylua" },
-				javascript = { "prettierd", "prettier", stop_after_first = true },
-				vue = { "prettierd", "prettier", stop_after_first = true },
-				html = { "prettierd", "prettier", stop_after_first = true },
+				javascript = { "prettier", stop_after_first = true },
+				vue = { "prettier", stop_after_first = true },
+				html = { "prettier", stop_after_first = true },
 				go = { "gopls", "goimports", "goimports-revisor", stop_after_first = false },
 			},
 		})

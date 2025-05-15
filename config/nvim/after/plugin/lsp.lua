@@ -1,15 +1,15 @@
 local register_lsp_keys = function(bufno)
 	local lsp_keymaps = {
 		-- diagnostics
-		{ "[d", vim.diagnostic.goto_next, desc = "goto next diagnostic" },
-		{ "]d", vim.diagnostic.goto_prev, desc = "goto prev diagnostic" },
-		{ "<leader>e", vim.diagnostic.open_float, desc = "Open floating diagnostic" },
-		{ "<leader>lq", vim.diagnostic.setqflist, desc = "diagnostic setloclist" },
-		{ "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
-		{ "gr", "<cmd>Telescope lsp_references<cr>", desc = "Goto References" },
-		{ "gi", "<cmd>Telescope lsp_implementations<cr>", desc = "Goto Implementations" },
-		{ "gd", "<cmd>Telescope lsp_definitions<cr>", desc = "Goto Definitions" },
-		{ "gT", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Goto Type Definitions" },
+		{ "[d",         vim.diagnostic.goto_next,                  desc = "goto next diagnostic" },
+		{ "]d",         vim.diagnostic.goto_prev,                  desc = "goto prev diagnostic" },
+		{ "<leader>e",  vim.diagnostic.open_float,                 desc = "Open floating diagnostic" },
+		{ "<leader>lq", vim.diagnostic.setqflist,                  desc = "diagnostic setloclist" },
+		{ "gD",         vim.lsp.buf.declaration,                   desc = "Goto Declaration" },
+		{ "gr",         "<cmd>Telescope lsp_references<cr>",       desc = "Goto References" },
+		{ "gi",         "<cmd>Telescope lsp_implementations<cr>",  desc = "Goto Implementations" },
+		{ "gd",         "<cmd>Telescope lsp_definitions<cr>",      desc = "Goto Definitions" },
+		{ "gT",         "<cmd>Telescope lsp_type_definitions<cr>", desc = "Goto Type Definitions" },
 		{
 			"<leader>lc",
 			"<cmd>Telescope lsp_incoming_calls<cr>",
@@ -24,9 +24,9 @@ local register_lsp_keys = function(bufno)
 		},
 
 		-- quickfix
-		{ "<leader>lr", vim.lsp.buf.references, desc = "References" },
-		{ "<leader>li", vim.lsp.buf.implementation, desc = "Implementations" },
-		{ "<leader>ld", vim.lsp.buf.definition, desc = "Definitions" },
+		{ "<leader>lr", vim.lsp.buf.references,      desc = "References" },
+		{ "<leader>li", vim.lsp.buf.implementation,  desc = "Implementations" },
+		{ "<leader>ld", vim.lsp.buf.definition,      desc = "Definitions" },
 		{ "<leader>lt", vim.lsp.buf.type_definition, desc = "Type Definitions" },
 		{
 			"<leader>lC",
@@ -42,7 +42,7 @@ local register_lsp_keys = function(bufno)
 		},
 
 		-- workspaces
-		{ "<leader>lwa", vim.lsp.buf.add_workspace_folder, desc = "Add workspace folder" },
+		{ "<leader>lwa", vim.lsp.buf.add_workspace_folder,    desc = "Add workspace folder" },
 		{ "<leader>lwr", vim.lsp.buf.remove_workspace_folder, desc = "Remove workspace folder" },
 		{
 			"<leader>lwl",
@@ -53,9 +53,9 @@ local register_lsp_keys = function(bufno)
 		},
 
 		-- lsp misc actions
-		{ "K", vim.lsp.buf.hover, desc = "Show Documentation/Definition" },
+		{ "K",          vim.lsp.buf.hover,          desc = "Show Documentation/Definition" },
 		{ "<leader>lh", vim.lsp.buf.signature_help, desc = "Signature help" },
-		{ "<leader>ln", vim.lsp.buf.rename, desc = "Rename" },
+		{ "<leader>ln", vim.lsp.buf.rename,         desc = "Rename" },
 		--{ "<leader>lf", vim.lsp.buf.format,         desc = "Format code" },
 		{
 			"<leader>la",
@@ -150,6 +150,7 @@ require("lspconfig").intelephense.setup({})
 
 require("lspconfig").ols.setup({})
 require("lspconfig").nil_ls.setup({})
+require("lspconfig").terraformls.setup({})
 
 require("lspconfig").volar.setup({
 	cmd = { "vue-language-server", "--stdio" },
