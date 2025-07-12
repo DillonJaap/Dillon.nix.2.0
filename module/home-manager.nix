@@ -18,6 +18,7 @@ in
 		php
 		mariadb	
 		gh
+		odin
 		# nerdfonts
   ];
 
