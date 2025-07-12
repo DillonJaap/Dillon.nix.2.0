@@ -14,6 +14,11 @@ in
     skate
 		ocaml
 		opam
+		nushell
+		php
+		mariadb	
+		gh
+		odin
 		# nerdfonts
   ];
 
