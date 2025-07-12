@@ -15,6 +15,9 @@ in
 		ocaml
 		opam
 		nushell
+		php
+		mariadb	
+		gh
 		# nerdfonts
   ];
 
