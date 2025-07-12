@@ -57,7 +57,6 @@ local node_from_tsnode = function(type, info)
 	return t(zero_val)
 end
 
-
 --- nodes_from_tsnode
 --- @param node TSNode
 --- @param info any
@@ -104,14 +103,14 @@ local get_return_nodes = function(info)
 			break
 		end
 	end
-	local file = io.open("output.txt", "w")
-	if file then
-		if function_node == nil then
-			file:write("function node nil")
-		end
-		file:write("function node not nil")
-	end
-	file:close()
+	-- local file = io.open("output.txt", "w")
+	-- if file then
+	-- 	if function_node == nil then
+	-- 		file:write("function node nil")
+	-- 	end
+	-- 	file:write("function node not nil")
+	-- end
+	-- file:close()
 
 	for _, node in query:iter_captures(function_node, 0) do
 		return nodes_from_tsnode(node, info)
@@ -127,7 +126,6 @@ local return_node = function(position, rep_position)
 		return sn(nil, nodes)
 	end, { rep_position })
 end
-
 
 local extractCapitalLetters = function(str)
 	local capitalLetters = ""
@@ -259,27 +257,26 @@ ls.add_snippets("go", {
 	-------------------------------------------------------------------------------
 	-- CharaChorder snippets
 	-------------------------------------------------------------------------------
-	-- TODO add for loop snippets
 	s(
-		{ trig = "function~~ ", name = "function snip", snippetType = "autosnippet" },
+		{ trig = "function snippet ", name = "function snip", snippetType = "autosnippet" },
 		fmt(
 			[[
-			func {}({}) {}{{
-				{}
+			func {name}({parameters}) {return_}{{
+				{body}
 			}}
-			{}
+			{exit}
 			]],
 			{
-				i(1, "name"),
-				i(2),
-				i(3),
-				i(4),
-				i(5),
+				name = i(1, "name"),
+				parameters = i(2),
+				return_ = i(3),
+				body = i(4),
+				exit = i(5),
 			}
 		)
 	),
 	s(
-		{ trig = "method~~ ", name = "method", snippetType = "autosnippet" },
+		{ trig = "method snippet ", name = "method", snippetType = "autosnippet" },
 		fmt(
 			[[
 			func ({} {}) {}({}) {}{{
@@ -299,67 +296,70 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "for~~ ", name = "for", snippetType = "autosnippet" },
+		{ trig = "for snippet", name = "for", snippetType = "autosnippet" },
 		fmt(
 			[[
 			for {iter}; {cond}; {update} {{
 				{body}
-			}}
+			}}{exit}
 			]],
 			{
 				iter = i(1, "i := 0"),
 				cond = i(2, "i < 10"),
 				update = i(3, "i++"),
-				body = i(4)
+				body = i(4),
+				exit = i(5),
 			}
 		)
 	),
 	s(
-		{ trig = "while~~ ", name = "while", snippetType = "autosnippet" },
+		{ trig = "while snippet ", name = "while", snippetType = "autosnippet" },
 		fmt(
 			[[
 			for {cond} {{
 				{body}
-			}}
+			}}{exit}
 			]],
 			{
 				cond = i(1, ""),
 				body = i(2),
+				exit = i(3),
 			}
 		)
 	),
 	s(
-		{ trig = "range~~ ", name = "for range", snippetType = "autosnippet" },
+		{ trig = "range snippet ", name = "for range", snippetType = "autosnippet" },
 		fmt(
 			[[
 			for {key}, {value} := range {var} {{
 				{body}
-			}}
+			}}{exit}
 			]],
 			{
 				key = i(1, "k"),
 				value = i(2, "v"),
 				var = i(3, "var"),
 				body = i(4),
+				exit = i(5),
 			}
 		)
 	),
 	s(
-		{ trig = "if~~ ", name = "if", snippetType = "autosnippet" },
+		{ trig = "if snippet ", name = "if", snippetType = "autosnippet" },
 		fmt(
 			[[
-			if {} {{
-				{}
+			if {cond} {{
+				{body}
 			}}
 			]],
 			{
-				i(1),
-				i(2),
+				cond = i(1),
+				body = i(2),
 			}
 		)
 	),
 	s(
-		{ trig = "elif~~ ", name = "else if", snippetType = "autosnippet" },
+		{ trig = "else if snippet ", name = "else if", snippetType = "autosnippet" },
 		fmt(
 			[[
 			else if {} {{
@@ -373,20 +373,21 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "else~~ ", name = "else", snippetType = "autosnippet" },
+		{ trig = "else snippet ", name = "else", snippetType = "autosnippet" },
 		fmt(
 			[[
 			else {{
-				{}
-			}}
+				{body}
+			}}{exit}
 			]],
 			{
-				i(1),
+				body = i(1),
+				exit = i(2),
 			}
 		)
 	),
 	s(
-		{ trig = "iferr~~ ", name = "if err != nil", snippetType = "autosnippet" },
+		{ trig = "if error ", name = "if err != nil", snippetType = "autosnippet" },
 		fmt(
 			[[
 			if {1} != nil {{
@@ -404,7 +405,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "struct~~ ", name = "struct", snippetType = "autosnippet" },
+		{ trig = "struct snippet ", name = "struct", snippetType = "autosnippet" },
 		fmt(
 			[[
 			type {} struct {{
@@ -420,7 +421,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "interface~~ ", name = "interface", snippetType = "autosnippet" },
+		{ trig = "interface snippet ", name = "interface", snippetType = "autosnippet" },
 		fmt(
 			[[
 			type {} interface {{
@@ -436,11 +437,10 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "errorf~~ ", name = "Errorf", snippetType = "autosnippet" },
+		{ trig = "fmt error ", name = "Errorf", snippetType = "autosnippet" },
 		fmt(
 			[[
-			fmt.Errorf({})
-			{}
+			fmt.Errorf({}){}
 			]],
 			{
 				c(1, {
@@ -452,11 +452,10 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "terrorf~~ ", name = "test Errorf", snippetType = "autosnippet" },
+		{ trig = "test error ", name = "test Errorf", snippetType = "autosnippet" },
 		fmt(
 			[[
-			t.Errorf({})
-			{}
+			t.Errorf({}){}
 			]],
 			{
 				c(1, {
@@ -468,11 +467,10 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "tfatalf~~ ", name = "test Fatalf", snippetType = "autosnippet" },
+		{ trig = "test fatal ", name = "test Fatalf", snippetType = "autosnippet" },
 		fmt(
 			[[
-			t.Fatalf({})
-			{}
+			t.Fatalf({}){}
 			]],
 			{
 				c(1, {
@@ -484,11 +482,10 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "printf~~ ", name = "Printf", snippetType = "autosnippet" },
+		{ trig = "fmt print ", name = "Printf", snippetType = "autosnippet" },
 		fmt(
 			[[
-			fmt.Printf({})
-			{}
+			fmt.Printf({}){}
 			]],
 			{
 				c(1, {
@@ -500,11 +497,10 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "sprintf~~ ", name = "Sprintf", snippetType = "autosnippet" },
+		{ trig = "fmt string ", name = "Sprintf", snippetType = "autosnippet" },
 		fmt(
 			[[
-			fmt.Sprintf({})
-			{}
+			fmt.Sprintf({}){}
 			]],
 			{
 				c(1, {
@@ -519,8 +515,7 @@ ls.add_snippets("go", {
 		{ trig = "fprintf~~ ", name = "Fprintf", snippetType = "autosnippet" },
 		fmt(
 			[[
-			fmt.fprintf({})
-			{}
+			fmt.fprintf({}){}
 			]],
 			{
 				c(1, {
@@ -535,8 +530,7 @@ ls.add_snippets("go", {
 		{ trig = "println~~ ", name = "Println", snippetType = "autosnippet" },
 		fmt(
 			[[
-			fmt.Println({})
-			{}
+			fmt.Println({}){}
 			]],
 			{
 				c(1, {

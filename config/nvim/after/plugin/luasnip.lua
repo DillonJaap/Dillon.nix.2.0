@@ -22,39 +22,8 @@ ls.config.setup({ enable_autosnippets = true })
 --------------------------------------------------------------------------------
 collection.clear_snippets("all")
 
--- Repeat a node, but transform the text with the transform_func parameter
-local transform = function(rep_position, transform_func)
-	return f(function(args)
-		return transform_func(args[1][1])
-	end, { rep_position })
-end
-
---ls.add_snippets("all", {
---})
-
---------------------------------------------------------------------------------
--- Lua Snippets
---------------------------------------------------------------------------------
-collection.clear_snippets("lua")
-
-ls.add_snippets("lua", {
-	ls.parser.parse_snippet("lf", "local $1 = function($2)\n	$0\nend"),
-	s(
-		"req",
-		fmt([[local {} = require '{}']], {
-			f(function(import_name)
-				local parts = vim.split(import_name[1][1], ".", { plain = true })
-				return parts[#parts] or "nope"
-			end, { 1 }),
-			i(1),
-		})
-	),
-})
-
---------------------------------------------------------------------------------
--- Go snippets
---------------------------------------------------------------------------------
 require("djaap.snippets.go")
+require("djaap.snippets.lua")
 
 --------------------------------------------------------------------------------
 -- Ocaml Snippets

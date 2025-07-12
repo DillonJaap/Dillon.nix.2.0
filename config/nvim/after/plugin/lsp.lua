@@ -134,23 +134,14 @@ require("lspconfig").ocamllsp.setup({
 	cmd = { "dune", "tools", "exec", "ocamllsp" },
 })
 
-require("lspconfig").html.setup({
-	filetypes = { "templ", "html" },
-})
-
-require("lspconfig").apex_ls.setup({
-	filetypes = { "apexcode", "apex" },
-})
-
-require("lspconfig").templ.setup({
-	filetypes = { "templ" },
-})
-
+require("lspconfig").html.setup({ filetypes = { "templ", "html" } })
+require("lspconfig").apex_ls.setup({ filetypes = { "apexcode", "apex" } })
+require("lspconfig").templ.setup({ filetypes = { "templ" } })
 require("lspconfig").intelephense.setup({})
-
 require("lspconfig").ols.setup({})
 require("lspconfig").nil_ls.setup({})
 require("lspconfig").terraformls.setup({})
+require("lspconfig").cypher_ls.setup({})
 
 require("lspconfig").volar.setup({
 	cmd = { "vue-language-server", "--stdio" },

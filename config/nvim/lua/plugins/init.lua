@@ -30,12 +30,12 @@ return {
 			require("symbols-outline").setup()
 		end,
 	},
-	{
-		"aserowy/tmux.nvim",
-		config = function()
-			require("tmux").setup()
-		end,
-	},
+	-- {
+	-- 	"aserowy/tmux.nvim",
+	-- 	config = function()
+	-- 		require("tmux").setup()
+	-- 	end,
+	-- },
 	{
 		"windwp/nvim-autopairs",
 		config = function()
