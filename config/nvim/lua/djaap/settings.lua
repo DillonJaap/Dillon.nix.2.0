@@ -19,9 +19,7 @@ o.number = true
 
 -- Splits
 o.splitright = true
-
 o.splitbelow = true
-
 
 -- Searching
 o.hlsearch = true
@@ -79,9 +77,6 @@ o.conceallevel = 2
 -- Sessions
 Session_dir = '~/Sessions'
 
--- Filetype
-vim.filetype = on
-
 vim.filetype.add({
 	extension = {
 		cls = 'apex',
@@ -92,21 +87,17 @@ vim.filetype.add({
 	}
 })
 
+-- term settings
+if vim.fn.executable('/opt/homebrew/bin//nu') == 1 then
+	vim.o.shell = "/opt/homebrew/bin//nu"
+else
+	vim.o.shell = '/bin/bash'
+end
+vim.o.shell = "/opt/homebrew/bin//nu"
+
 --------------------------------------------------------------------------------
 -- Auto Groups -----------------------------------------------------------------
 --------------------------------------------------------------------------------
-local norg_augroup = vim.api.nvim_create_augroup('norg_cmds', { clear = true })
-vim.api.nvim_create_autocmd('FileType', {
-	pattern = 'norg',
-	group = norg_augroup,
-	callback = function()
-		o.wrap = true
-		o.textwidth = 80
-		o.expandtab = true
-		o.conceallevel = 2
-	end
-})
-
 local hs_augroup = vim.api.nvim_create_augroup('hs_cmds', { clear = true })
 vim.api.nvim_create_autocmd('FileType', {
 	pattern = '.*\\.hs',

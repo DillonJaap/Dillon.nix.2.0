@@ -91,9 +91,9 @@ local lsp = require("lsp-zero")
 
 lsp.on_attach(custom_on_attach)
 
---lsp.lsp_flags(lsp_flags)
-
+-------------------------------------------------------------------------------
 -- Configure language servers
+-------------------------------------------------------------------------------
 require("lspconfig").lua_ls.setup(lsp.nvim_lua_ls({
 	settings = {
 		Lua = {
@@ -158,6 +158,84 @@ require("lspconfig").volar.setup({
 })
 
 require("lspconfig").rescriptls.setup({})
+require("lspconfig").gleam.setup({})
+require("lspconfig").yamlls.setup({})
+require("lspconfig").tailwindcss.setup({
+	filetypes = {
+		"gleam",
+		"aspnetcorerazor",
+		"astro",
+		"astro-markdown",
+		"blade",
+		"clojure",
+		"django-html",
+		"htmldjango",
+		"edge",
+		"eelixir",
+		"elixir",
+		"ejs",
+		"erb",
+		"eruby",
+		"gohtml",
+		"gohtmltmpl",
+		"haml",
+		"handlebars",
+		"hbs",
+		"html",
+		"htmlangular",
+		"html-eex",
+		"heex",
+		"jade",
+		"leaf",
+		"liquid",
+		"markdown",
+		"mdx",
+		"mustache",
+		"njk",
+		"nunjucks",
+		"php",
+		"razor",
+		"slim",
+		"twig",
+		"css",
+		"less",
+		"postcss",
+		"sass",
+		"scss",
+		"stylus",
+		"sugarss",
+		"javascript",
+		"javascriptreact",
+		"reason",
+		"rescript",
+		"typescript",
+		"typescriptreact",
+		"vue",
+		"svelte",
+		"templ",
+	},
+	settings = {
+		tailwindCSS = {
+			experimental = {
+				classRegex = {
+					{ "\\w+\\.class\\(\"([^\"]*)\"\\)",                    "([^\"]*)" },
+					{ "\\w+\\.class\\('([^']*)'\\)",                       "([^']*)" },
+					{ "class\\(\"([^\"]*)\"\\)",                           "([^\"]*)" },
+					{ "class\\('([^']*)'\\)",                              "([^']*)" },
+
+					-- Multiline patterns with flexible whitespace and comma handling
+					{ "\\w+\\.class\\([\\s\\n]*\"([^\"]*)\"[\\s\\n,]*\\)", "([^\"]*)" },
+					{ "\\w+\\.class\\([\\s\\n]*'([^']*)'[\\s\\n,]*\\)",    "([^']*)" },
+					{ "class\\([\\s\\n]*\"([^\"]*)\"[\\s\\n,]*\\)",        "([^\"]*)" },
+					{ "class\\([\\s\\n]*'([^']*)'[\\s\\n,]*\\)",           "([^']*)" },
+				}
+			},
+			includeLanguages = {
+				gleam = "html"
+			}
+		}
+	}
+})
 
 -- require("lspconfig").ts_ls.setup({
 -- 	init_options = {

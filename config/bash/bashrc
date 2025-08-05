@@ -6,12 +6,10 @@ HISTFILESIZE=
 
 # aliases
 alias ls='eza'
-alias vi='nvim'
 alias sb="source ~/.bashrc"
 alias jqv="pbpaste | jq"
 alias bp="pbpaste | base64 -d"
 alias ts="~/.scripts/tmux-session-manager"
-alias git-df='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 alias kl='kitty @ set-colors --all --configured ~/.config/kitty/kitty-themes/gruvbox_light.conf'
 alias kd='kitty @ set-colors --all --configured ~/.config/kitty/kitty-themes/gruvbox_dark.conf'
@@ -20,8 +18,13 @@ alias gitcc='git rev-parse HEAD | pbcopy'
 
 # MAC stuff
 if [[ $(uname -o) = "Darwin"  ]]; then
-    alias nixos='qemu-system-x86_64 -m 8G -smp 6 -drive file=~/qemu-images/nixos-arm.qcow2,if=virtio -vga std -display default,show-cursor=on -usb -device usb-tablet'
     export PATH=$PATH:/opt/homebrew/bin
+	#export ANDROID_SDK_ROOT="/opt/homebrew/share/android-commandlinetools"
+	export ANDROID_HOME=$HOME/Library/Android/sdk
+	export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+	export PATH=$PATH:$ANDROID_HOME/platform-tools
+	export PATH=$PATH:$ANDROID_HOME/emulator
+
     # AM Team stuff
     [[ -f ~/am.sh ]] && source ~/am.sh
 fi
