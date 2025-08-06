@@ -5,7 +5,7 @@ in
 {
   #home.homeDirectory = homeDirectory;
   #home.username = username;
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.05";
   home.packages = with pkgs; [
     go
     fzf
@@ -19,7 +19,12 @@ in
 		mariadb	
 		gh
 		odin
-		# nerdfonts
+    nushell
+    cargo
+    nerd-fonts.iosevka
+    gleam
+    jdk
+    erlang
   ];
 
   xdg.configFile = {

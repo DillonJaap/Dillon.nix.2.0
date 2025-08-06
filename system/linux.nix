@@ -11,7 +11,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
   modules = [
     {
       # Home Manager global settings
-      home.stateVersion = "24.11"; # Set based on Home Manager version compatibility
+      home.stateVersion = "25.05"; # Set based on Home Manager version compatibility
 
       # User-specific configuration
       home.username = username;
