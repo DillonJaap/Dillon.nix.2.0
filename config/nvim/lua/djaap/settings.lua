@@ -2,11 +2,11 @@ local g = vim.g
 local o = vim.o
 
 -- Colorscheme
-o.syntax = 'enable'
-o.background = 'dark'
+o.syntax = "enable"
+o.background = "dark"
 o.termguicolors = true
-vim.cmd([[let g:gruvbox_material_background = 'meduim']])
-vim.cmd('colorscheme gruvbox-material')
+vim.cmd([[let g:gruvbox_material_background = 'hard']])
+vim.cmd("colorscheme gruvbox-material")
 
 -- Misc Visuals
 o.cursorline = true
@@ -38,7 +38,7 @@ o.hidden = true
 
 -- Persistent Undo
 o.undofile = true
-vim.cmd('set undodir=$HOME/.vim/undo')
+vim.cmd("set undodir=$HOME/.vim/undo")
 o.undolevels = 1000
 o.undoreload = 10000
 
@@ -48,12 +48,12 @@ o.foldlevelstart = 99
 o.foldenable = true
 
 -- mouse
-if vim.fn.has('mouse') == 1 then
-	o.mouse = 'a'
+if vim.fn.has("mouse") == 1 then
+	o.mouse = "a"
 end
 
 -- Finding files
-o.path = '+=**'
+o.path = "+=**"
 o.wildmenu = true
 -- o.wildcharm = '<C-z>'
 
@@ -75,32 +75,31 @@ o.softtabstop = -1 -- If negative, shiftwidth value is used
 o.conceallevel = 2
 
 -- Sessions
-Session_dir = '~/Sessions'
+Session_dir = "~/Sessions"
 
 vim.filetype.add({
 	extension = {
-		cls = 'apex',
-		apex = 'apex',
-		trigger = 'apex',
-		soql = 'soql',
-		sosl = 'sosl',
-	}
+		cls = "apex",
+		apex = "apex",
+		trigger = "apex",
+		soql = "soql",
+		sosl = "sosl",
+	},
 })
 
 -- term settings
-if vim.fn.executable('/opt/homebrew/bin//nu') == 1 then
-	vim.o.shell = "/opt/homebrew/bin//nu"
+if vim.fn.executable("nu") == 1 then
+	vim.o.shell = "nu"
 else
-	vim.o.shell = '/bin/bash'
+	vim.o.shell = "/bin/bash"
 end
-vim.o.shell = "/opt/homebrew/bin//nu"
 
 --------------------------------------------------------------------------------
 -- Auto Groups -----------------------------------------------------------------
 --------------------------------------------------------------------------------
-local hs_augroup = vim.api.nvim_create_augroup('hs_cmds', { clear = true })
-vim.api.nvim_create_autocmd('FileType', {
-	pattern = '.*\\.hs',
+local hs_augroup = vim.api.nvim_create_augroup("hs_cmds", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = ".*\\.hs",
 	group = hs_augroup,
 	callback = function()
 		o.textwidth = 100
@@ -108,16 +107,16 @@ vim.api.nvim_create_autocmd('FileType', {
 		o.tabstop = 4
 		o.shiftwidth = 4
 		o.softtabstop = -1 -- If negative, shiftwidth value is used
-	end
+	end,
 })
 
-local term_augroup = vim.api.nvim_create_augroup('term_cmds', { clear = true })
-vim.api.nvim_create_autocmd('TermOpen', {
+local term_augroup = vim.api.nvim_create_augroup("term_cmds", { clear = true })
+vim.api.nvim_create_autocmd("TermOpen", {
 	group = term_augroup,
 	callback = function()
 		vim.opt_local.relativenumber = false
 		vim.opt_local.number = false
-	end
+	end,
 })
 
 -- other stuff

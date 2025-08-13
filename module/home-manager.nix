@@ -25,6 +25,8 @@ in
     gleam
     jdk
     erlang
+    rebar3
+    inotify-tools
   ];
 
   xdg.configFile = {
