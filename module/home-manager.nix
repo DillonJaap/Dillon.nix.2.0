@@ -26,7 +26,7 @@ in
     jdk
     erlang
     rebar3
-    inotify-tools
+    # inotify-tools
   ];
 
   xdg.configFile = {

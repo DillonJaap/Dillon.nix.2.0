@@ -86,7 +86,7 @@ wk.add({
 -- tabs
 wk.add({
 	{ "<leader>tc", ":tabnew<CR>",      desc = "Tab New" },
-	{ "<leader>tn", ":tabnew<CR>",      desc = "Tab Next" },
+	{ "<leader>tn", ":tabnext<CR>",      desc = "Tab Next" },
 	{ "<leader>tp", ":tabprevious<CR>", desc = "Tab Previous" },
 	{ "<leader>td", ":tabclose<CR>",    desc = "Tab Close" },
 })
