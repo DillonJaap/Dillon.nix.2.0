@@ -1,15 +1,15 @@
 local register_lsp_keys = function(bufno)
 	local lsp_keymaps = {
 		-- diagnostics
-		{ "[d", vim.diagnostic.goto_next, desc = "goto next diagnostic" },
-		{ "]d", vim.diagnostic.goto_prev, desc = "goto prev diagnostic" },
-		{ "<leader>e", vim.diagnostic.open_float, desc = "Open floating diagnostic" },
-		{ "<leader>lq", vim.diagnostic.setqflist, desc = "diagnostic setloclist" },
-		{ "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
-		{ "gr", "<cmd>Telescope lsp_references<cr>", desc = "Goto References" },
-		{ "gi", "<cmd>Telescope lsp_implementations<cr>", desc = "Goto Implementations" },
-		{ "gd", "<cmd>Telescope lsp_definitions<cr>", desc = "Goto Definitions" },
-		{ "gT", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Goto Type Definitions" },
+		{ "[d",         vim.diagnostic.goto_next,                  desc = "goto next diagnostic" },
+		{ "]d",         vim.diagnostic.goto_prev,                  desc = "goto prev diagnostic" },
+		{ "<leader>e",  vim.diagnostic.open_float,                 desc = "Open floating diagnostic" },
+		{ "<leader>lq", vim.diagnostic.setqflist,                  desc = "diagnostic setloclist" },
+		{ "gD",         vim.lsp.buf.declaration,                   desc = "Goto Declaration" },
+		{ "gr",         "<cmd>Telescope lsp_references<cr>",       desc = "Goto References" },
+		{ "gi",         "<cmd>Telescope lsp_implementations<cr>",  desc = "Goto Implementations" },
+		{ "gd",         "<cmd>Telescope lsp_definitions<cr>",      desc = "Goto Definitions" },
+		{ "gT",         "<cmd>Telescope lsp_type_definitions<cr>", desc = "Goto Type Definitions" },
 		{
 			"<leader>lc",
 			"<cmd>Telescope lsp_incoming_calls<cr>",
@@ -24,9 +24,9 @@ local register_lsp_keys = function(bufno)
 		},
 
 		-- quickfix
-		{ "<leader>lr", vim.lsp.buf.references, desc = "References" },
-		{ "<leader>li", vim.lsp.buf.implementation, desc = "Implementations" },
-		{ "<leader>ld", vim.lsp.buf.definition, desc = "Definitions" },
+		{ "<leader>lr", vim.lsp.buf.references,      desc = "References" },
+		{ "<leader>li", vim.lsp.buf.implementation,  desc = "Implementations" },
+		{ "<leader>ld", vim.lsp.buf.definition,      desc = "Definitions" },
 		{ "<leader>lt", vim.lsp.buf.type_definition, desc = "Type Definitions" },
 		{
 			"<leader>lC",
@@ -42,7 +42,7 @@ local register_lsp_keys = function(bufno)
 		},
 
 		-- workspaces
-		{ "<leader>lwa", vim.lsp.buf.add_workspace_folder, desc = "Add workspace folder" },
+		{ "<leader>lwa", vim.lsp.buf.add_workspace_folder,    desc = "Add workspace folder" },
 		{ "<leader>lwr", vim.lsp.buf.remove_workspace_folder, desc = "Remove workspace folder" },
 		{
 			"<leader>lwl",
@@ -53,9 +53,9 @@ local register_lsp_keys = function(bufno)
 		},
 
 		-- lsp misc actions
-		{ "K", vim.lsp.buf.hover, desc = "Show Documentation/Definition" },
+		{ "K",          vim.lsp.buf.hover,          desc = "Show Documentation/Definition" },
 		{ "<leader>lh", vim.lsp.buf.signature_help, desc = "Signature help" },
-		{ "<leader>ln", vim.lsp.buf.rename, desc = "Rename" },
+		{ "<leader>ln", vim.lsp.buf.rename,         desc = "Rename" },
 		--{ "<leader>lf", vim.lsp.buf.format,         desc = "Format code" },
 		{
 			"<leader>la",
@@ -94,7 +94,7 @@ lsp.on_attach(custom_on_attach)
 -------------------------------------------------------------------------------
 -- Configure language servers
 -------------------------------------------------------------------------------
-vim.lsp.config.lua_ls.setup(lsp.nvim_lua_ls({
+vim.lsp.config("lua_ls", {
 	settings = {
 		Lua = {
 			runtime = {
@@ -114,9 +114,9 @@ vim.lsp.config.lua_ls.setup(lsp.nvim_lua_ls({
 			},
 		},
 	},
-}))
+})
 
-vim.lsp.config.gopls.setup({
+vim.lsp.config("gopls", {
 	settings = {
 		gopls = {
 			buildFlags = { "-tags=integration,e2e" },
@@ -124,26 +124,26 @@ vim.lsp.config.gopls.setup({
 	},
 })
 
-vim.lsp.config.sqlls.setup({
+vim.lsp.config("sqlls", {
 	settings = {},
 	filetypes = { "sql", "mysql", "sql.tmpl" },
 })
 
-vim.lsp.config.ocamllsp.setup({
+vim.lsp.config("ocamllsp", {
 	manual_install = true,
 	cmd = { "dune", "tools", "exec", "ocamllsp" },
 })
 
-vim.lsp.config.html.setup({ filetypes = { "templ", "html" } })
-vim.lsp.config.apex_ls.setup({ filetypes = { "apexcode", "apex" } })
-vim.lsp.config.templ.setup({ filetypes = { "templ" } })
-vim.lsp.config.intelephense.setup({})
-vim.lsp.config.ols.setup({})
-vim.lsp.config.nil_ls.setup({})
-vim.lsp.config.terraformls.setup({})
-vim.lsp.config.cypher_ls.setup({})
+vim.lsp.config("html", { filetypes = { "templ", "html" } })
+vim.lsp.config("apex_ls", { filetypes = { "apexcode", "apex" } })
+vim.lsp.config("templ", { filetypes = { "templ" } })
+vim.lsp.config("intelephense", {})
+vim.lsp.config("ols", {})
+vim.lsp.config("nil_ls", {})
+vim.lsp.config("terraformls", {})
+vim.lsp.config("cypher_ls", {})
 
-vim.lsp.config.volar.setup({
+vim.lsp.config("volar", {
 	cmd = { "vue-language-server", "--stdio" },
 	init_options = {
 		vue = {
@@ -157,10 +157,9 @@ vim.lsp.config.volar.setup({
 	},
 })
 
-vim.lsp.config.rescriptls.setup({})
-vim.lsp.config.gleam.setup({})
-vim.lsp.config.yamlls.setup({})
-vim.lsp.config.tailwindcss.setup({
+vim.lsp.config("gleam", {})
+vim.lsp.config("yamlls", {})
+vim.lsp.config("tailwindcss", {
 	filetypes = {
 		"gleam",
 		"aspnetcorerazor",
@@ -218,26 +217,26 @@ vim.lsp.config.tailwindcss.setup({
 		tailwindCSS = {
 			experimental = {
 				classRegex = {
-					{ '\\w+\\.class\\("([^"]*)"\\)', '([^"]*)' },
-					{ "\\w+\\.class\\('([^']*)'\\)", "([^']*)" },
-					{ 'class\\("([^"]*)"\\)', '([^"]*)' },
-					{ "class\\('([^']*)'\\)", "([^']*)" },
+					{ "\\w+\\.class\\(\"([^\"]*)\"\\)",                    "([^\"]*)" },
+					{ "\\w+\\.class\\('([^']*)'\\)",                       "([^']*)" },
+					{ "class\\(\"([^\"]*)\"\\)",                           "([^\"]*)" },
+					{ "class\\('([^']*)'\\)",                              "([^']*)" },
 
 					-- Multiline patterns with flexible whitespace and comma handling
-					{ '\\w+\\.class\\([\\s\\n]*"([^"]*)"[\\s\\n,]*\\)', '([^"]*)' },
-					{ "\\w+\\.class\\([\\s\\n]*'([^']*)'[\\s\\n,]*\\)", "([^']*)" },
-					{ 'class\\([\\s\\n]*"([^"]*)"[\\s\\n,]*\\)', '([^"]*)' },
-					{ "class\\([\\s\\n]*'([^']*)'[\\s\\n,]*\\)", "([^']*)" },
-				},
+					{ "\\w+\\.class\\([\\s\\n]*\"([^\"]*)\"[\\s\\n,]*\\)", "([^\"]*)" },
+					{ "\\w+\\.class\\([\\s\\n]*'([^']*)'[\\s\\n,]*\\)",    "([^']*)" },
+					{ "class\\([\\s\\n]*\"([^\"]*)\"[\\s\\n,]*\\)",        "([^\"]*)" },
+					{ "class\\([\\s\\n]*'([^']*)'[\\s\\n,]*\\)",           "([^']*)" },
+				}
 			},
 			includeLanguages = {
-				gleam = "html",
-			},
-		},
-	},
+				gleam = "html"
+			}
+		}
+	}
 })
 
--- vim.lsp.config.ts_ls.setup({
+-- require("lspconfig").ts_ls.setup({
 -- 	init_options = {
 -- 		plugins = {
 -- 			{
