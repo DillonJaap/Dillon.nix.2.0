@@ -15,7 +15,7 @@ return {
 				html = { "prettier", stop_after_first = true },
 				go = { "gopls", "goimports", "goimports-revisor", stop_after_first = false },
 				odin = { "odinfmt" },
-        nix = { "nixpkgs-fmt"}
+				nix = { "nixpkgs-fmt" },
 			},
 		})
 	end,
