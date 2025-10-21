@@ -89,7 +89,7 @@ lsp.on_attach(custom_on_attach)
 -------------------------------------------------------------------------------
 -- Configure language servers
 -------------------------------------------------------------------------------
-vim.lsp.config.lua_ls.setup(lsp.nvim_lua_ls({
+vim.lsp.config("lua_ls", {
 	settings = {
 		Lua = {
 			runtime = {
@@ -109,9 +109,9 @@ vim.lsp.config.lua_ls.setup(lsp.nvim_lua_ls({
 			},
 		},
 	},
-}))
+})
 
-vim.lsp.config.gopls.setup({
+vim.lsp.config("gopls", {
 	settings = {
 		gopls = {
 			buildFlags = { "-tags=integration,e2e" },
@@ -119,26 +119,26 @@ vim.lsp.config.gopls.setup({
 	},
 })
 
-vim.lsp.config.sqlls.setup({
+vim.lsp.config("sqlls", {
 	settings = {},
 	filetypes = { "sql", "mysql", "sql.tmpl" },
 })
 
-vim.lsp.config.ocamllsp.setup({
+vim.lsp.config("ocamllsp", {
 	manual_install = true,
 	cmd = { "dune", "tools", "exec", "ocamllsp" },
 })
 
-vim.lsp.config.html.setup({ filetypes = { "templ", "html" } })
-vim.lsp.config.apex_ls.setup({ filetypes = { "apexcode", "apex" } })
-vim.lsp.config.templ.setup({ filetypes = { "templ" } })
-vim.lsp.config.intelephense.setup({})
-vim.lsp.config.ols.setup({})
-vim.lsp.config.nil_ls.setup({})
-vim.lsp.config.terraformls.setup({})
-vim.lsp.config.cypher_ls.setup({})
+vim.lsp.config("html", { filetypes = { "templ", "html" } })
+vim.lsp.config("apex_ls", { filetypes = { "apexcode", "apex" } })
+vim.lsp.config("templ", { filetypes = { "templ" } })
+vim.lsp.config("intelephense", {})
+vim.lsp.config("ols", {})
+vim.lsp.config("nil_ls", {})
+vim.lsp.config("terraformls", {})
+vim.lsp.config("cypher_ls", {})
 
-vim.lsp.config.volar.setup({
+vim.lsp.config("volar", {
 	cmd = { "vue-language-server", "--stdio" },
 	init_options = {
 		vue = {
@@ -152,10 +152,9 @@ vim.lsp.config.volar.setup({
 	},
 })
 
-vim.lsp.config.rescriptls.setup({})
-vim.lsp.config.gleam.setup({})
-vim.lsp.config.yamlls.setup({})
-vim.lsp.config.tailwindcss.setup({
+vim.lsp.config("gleam", {})
+vim.lsp.config("yamlls", {})
+vim.lsp.config("tailwindcss", {
 	filetypes = {
 		"gleam",
 		"aspnetcorerazor",
