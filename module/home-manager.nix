@@ -12,13 +12,13 @@ in
     eza
     ripgrep
     skate
-		ocaml
-		opam
-		nushell
-		php
-		mariadb	
-		gh
-		odin
+    ocaml
+    opam
+    nushell
+    php
+    mariadb  
+    gh
+    odin
     nushell
     cargo
     nerd-fonts.iosevka
