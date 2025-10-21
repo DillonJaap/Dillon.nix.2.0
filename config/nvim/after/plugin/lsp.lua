@@ -1,15 +1,15 @@
 local register_lsp_keys = function(bufno)
 	local lsp_keymaps = {
 		-- diagnostics
-		{ "[d",         vim.diagnostic.goto_next,                  desc = "goto next diagnostic" },
-		{ "]d",         vim.diagnostic.goto_prev,                  desc = "goto prev diagnostic" },
-		{ "<leader>e",  vim.diagnostic.open_float,                 desc = "Open floating diagnostic" },
-		{ "<leader>lq", vim.diagnostic.setqflist,                  desc = "diagnostic setloclist" },
-		{ "gD",         vim.lsp.buf.declaration,                   desc = "Goto Declaration" },
-		{ "gr",         "<cmd>Telescope lsp_references<cr>",       desc = "Goto References" },
-		{ "gi",         "<cmd>Telescope lsp_implementations<cr>",  desc = "Goto Implementations" },
-		{ "gd",         "<cmd>Telescope lsp_definitions<cr>",      desc = "Goto Definitions" },
-		{ "gT",         "<cmd>Telescope lsp_type_definitions<cr>", desc = "Goto Type Definitions" },
+		{ "[d", vim.diagnostic.goto_next, desc = "goto next diagnostic" },
+		{ "]d", vim.diagnostic.goto_prev, desc = "goto prev diagnostic" },
+		{ "<leader>e", vim.diagnostic.open_float, desc = "Open floating diagnostic" },
+		{ "<leader>lq", vim.diagnostic.setqflist, desc = "diagnostic setloclist" },
+		{ "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
+		{ "gr", "<cmd>Telescope lsp_references<cr>", desc = "Goto References" },
+		{ "gi", "<cmd>Telescope lsp_implementations<cr>", desc = "Goto Implementations" },
+		{ "gd", "<cmd>Telescope lsp_definitions<cr>", desc = "Goto Definitions" },
+		{ "gT", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Goto Type Definitions" },
 		{
 			"<leader>lc",
 			"<cmd>Telescope lsp_incoming_calls<cr>",
@@ -24,9 +24,9 @@ local register_lsp_keys = function(bufno)
 		},
 
 		-- quickfix
-		{ "<leader>lr", vim.lsp.buf.references,      desc = "References" },
-		{ "<leader>li", vim.lsp.buf.implementation,  desc = "Implementations" },
-		{ "<leader>ld", vim.lsp.buf.definition,      desc = "Definitions" },
+		{ "<leader>lr", vim.lsp.buf.references, desc = "References" },
+		{ "<leader>li", vim.lsp.buf.implementation, desc = "Implementations" },
+		{ "<leader>ld", vim.lsp.buf.definition, desc = "Definitions" },
 		{ "<leader>lt", vim.lsp.buf.type_definition, desc = "Type Definitions" },
 		{
 			"<leader>lC",
@@ -42,7 +42,7 @@ local register_lsp_keys = function(bufno)
 		},
 
 		-- workspaces
-		{ "<leader>lwa", vim.lsp.buf.add_workspace_folder,    desc = "Add workspace folder" },
+		{ "<leader>lwa", vim.lsp.buf.add_workspace_folder, desc = "Add workspace folder" },
 		{ "<leader>lwr", vim.lsp.buf.remove_workspace_folder, desc = "Remove workspace folder" },
 		{
 			"<leader>lwl",
@@ -53,9 +53,9 @@ local register_lsp_keys = function(bufno)
 		},
 
 		-- lsp misc actions
-		{ "K",          vim.lsp.buf.hover,          desc = "Show Documentation/Definition" },
+		{ "K", vim.lsp.buf.hover, desc = "Show Documentation/Definition" },
 		{ "<leader>lh", vim.lsp.buf.signature_help, desc = "Signature help" },
-		{ "<leader>ln", vim.lsp.buf.rename,         desc = "Rename" },
+		{ "<leader>ln", vim.lsp.buf.rename, desc = "Rename" },
 		--{ "<leader>lf", vim.lsp.buf.format,         desc = "Format code" },
 		{
 			"<leader>la",
@@ -82,11 +82,6 @@ local custom_on_attach = function(client, bufnr)
 	})
 end
 
-require("neodev").setup({
-	pathStrict = true,
-	-- add any options here, or leave empty to use the default settings
-})
-
 local lsp = require("lsp-zero")
 
 lsp.on_attach(custom_on_attach)
@@ -94,7 +89,7 @@ lsp.on_attach(custom_on_attach)
 -------------------------------------------------------------------------------
 -- Configure language servers
 -------------------------------------------------------------------------------
-require("lspconfig").lua_ls.setup(lsp.nvim_lua_ls({
+vim.lsp.config.lua_ls.setup(lsp.nvim_lua_ls({
 	settings = {
 		Lua = {
 			runtime = {
@@ -116,7 +111,7 @@ require("lspconfig").lua_ls.setup(lsp.nvim_lua_ls({
 	},
 }))
 
-require("lspconfig").gopls.setup({
+vim.lsp.config.gopls.setup({
 	settings = {
 		gopls = {
 			buildFlags = { "-tags=integration,e2e" },
@@ -124,26 +119,26 @@ require("lspconfig").gopls.setup({
 	},
 })
 
-require("lspconfig").sqlls.setup({
+vim.lsp.config.sqlls.setup({
 	settings = {},
 	filetypes = { "sql", "mysql", "sql.tmpl" },
 })
 
-require("lspconfig").ocamllsp.setup({
+vim.lsp.config.ocamllsp.setup({
 	manual_install = true,
 	cmd = { "dune", "tools", "exec", "ocamllsp" },
 })
 
-require("lspconfig").html.setup({ filetypes = { "templ", "html" } })
-require("lspconfig").apex_ls.setup({ filetypes = { "apexcode", "apex" } })
-require("lspconfig").templ.setup({ filetypes = { "templ" } })
-require("lspconfig").intelephense.setup({})
-require("lspconfig").ols.setup({})
-require("lspconfig").nil_ls.setup({})
-require("lspconfig").terraformls.setup({})
-require("lspconfig").cypher_ls.setup({})
+vim.lsp.config.html.setup({ filetypes = { "templ", "html" } })
+vim.lsp.config.apex_ls.setup({ filetypes = { "apexcode", "apex" } })
+vim.lsp.config.templ.setup({ filetypes = { "templ" } })
+vim.lsp.config.intelephense.setup({})
+vim.lsp.config.ols.setup({})
+vim.lsp.config.nil_ls.setup({})
+vim.lsp.config.terraformls.setup({})
+vim.lsp.config.cypher_ls.setup({})
 
-require("lspconfig").volar.setup({
+vim.lsp.config.volar.setup({
 	cmd = { "vue-language-server", "--stdio" },
 	init_options = {
 		vue = {
@@ -157,10 +152,10 @@ require("lspconfig").volar.setup({
 	},
 })
 
-require("lspconfig").rescriptls.setup({})
-require("lspconfig").gleam.setup({})
-require("lspconfig").yamlls.setup({})
-require("lspconfig").tailwindcss.setup({
+vim.lsp.config.rescriptls.setup({})
+vim.lsp.config.gleam.setup({})
+vim.lsp.config.yamlls.setup({})
+vim.lsp.config.tailwindcss.setup({
 	filetypes = {
 		"gleam",
 		"aspnetcorerazor",
@@ -218,26 +213,26 @@ require("lspconfig").tailwindcss.setup({
 		tailwindCSS = {
 			experimental = {
 				classRegex = {
-					{ "\\w+\\.class\\(\"([^\"]*)\"\\)",                    "([^\"]*)" },
-					{ "\\w+\\.class\\('([^']*)'\\)",                       "([^']*)" },
-					{ "class\\(\"([^\"]*)\"\\)",                           "([^\"]*)" },
-					{ "class\\('([^']*)'\\)",                              "([^']*)" },
+					{ '\\w+\\.class\\("([^"]*)"\\)', '([^"]*)' },
+					{ "\\w+\\.class\\('([^']*)'\\)", "([^']*)" },
+					{ 'class\\("([^"]*)"\\)', '([^"]*)' },
+					{ "class\\('([^']*)'\\)", "([^']*)" },
 
 					-- Multiline patterns with flexible whitespace and comma handling
-					{ "\\w+\\.class\\([\\s\\n]*\"([^\"]*)\"[\\s\\n,]*\\)", "([^\"]*)" },
-					{ "\\w+\\.class\\([\\s\\n]*'([^']*)'[\\s\\n,]*\\)",    "([^']*)" },
-					{ "class\\([\\s\\n]*\"([^\"]*)\"[\\s\\n,]*\\)",        "([^\"]*)" },
-					{ "class\\([\\s\\n]*'([^']*)'[\\s\\n,]*\\)",           "([^']*)" },
-				}
+					{ '\\w+\\.class\\([\\s\\n]*"([^"]*)"[\\s\\n,]*\\)', '([^"]*)' },
+					{ "\\w+\\.class\\([\\s\\n]*'([^']*)'[\\s\\n,]*\\)", "([^']*)" },
+					{ 'class\\([\\s\\n]*"([^"]*)"[\\s\\n,]*\\)', '([^"]*)' },
+					{ "class\\([\\s\\n]*'([^']*)'[\\s\\n,]*\\)", "([^']*)" },
+				},
 			},
 			includeLanguages = {
-				gleam = "html"
-			}
-		}
-	}
+				gleam = "html",
+			},
+		},
+	},
 })
 
--- require("lspconfig").ts_ls.setup({
+-- vim.lsp.config.ts_ls.setup({
 -- 	init_options = {
 -- 		plugins = {
 -- 			{
