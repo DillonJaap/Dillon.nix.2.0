@@ -30,7 +30,14 @@ end)
 
 -- Telescope
 wk.add({
-	{ "<C-f>", ":Telescope git_files<cr>", desc = "Find files" },
+	-- { "<C-f>", ":Telescope git_files<cr>", desc = "Find files" },
+	{
+		"<C-f>",
+		function()
+			require("fff").find_files()
+		end,
+		desc = "Find files",
+	},
 	{ "<leader>ff", ":Telescope find_files<cr>", desc = "Find files" },
 	{ "<leader>fb", ":Telescope buffers<cr>", desc = "Find buffers" },
 	{ "<leader>fB", ":Telescope git_branches<cr>", desc = "Find git branches" },
