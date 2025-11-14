@@ -1,14 +1,12 @@
 return {
 	{ "neovim/nvim-lspconfig" }, -- Required
 	{
-		-- Optional
-		"williamboman/mason.nvim",
-		build = function()
-			pcall(vim.cmd, "MasonUpdate")
-		end,
+		"mason-org/mason.nvim",
+		opts = {}
+		config = function() 
+			require("mason").setup()
+		end 
 	},
-	{ "williamboman/mason-lspconfig.nvim" }, -- Optional
-
 	-- Autocompletion
 	{ "hrsh7th/nvim-cmp" }, -- Required
 	{ "hrsh7th/cmp-nvim-lsp" }, -- Required

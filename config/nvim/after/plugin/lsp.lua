@@ -1,15 +1,9 @@
--------------------------------------------------------------------------------
--- Modern Neovim (0.10+) Lazy-Free LSP Setup using vim.lsp.config()
--------------------------------------------------------------------------------
-
 local wk = require("which-key")
 
 -- ---------------------------------------------------------------------------
 -- Helper: LSP keymaps
 -- ---------------------------------------------------------------------------
 local function register_lsp_keys(bufnr)
-  local opts = { buffer = bufnr, noremap = true, silent = true }
-
   local mappings = {
     -- Diagnostics
     { "[d", vim.diagnostic.goto_prev, desc = "Prev Diagnostic" },
@@ -44,16 +38,13 @@ local function register_lsp_keys(bufnr)
     { "<leader>lO", vim.lsp.buf.outgoing_calls, desc = "Outgoing Calls" },
     { "<leader>lc", "<cmd>Telescope lsp_incoming_calls<cr>", desc = "Incoming Calls (Telescope)" },
     { "<leader>lo", "<cmd>Telescope lsp_outgoing_calls<cr>", desc = "Outgoing Calls (Telescope)" },
-  }
 
-  for _, m in ipairs(mappings) do
-    vim.keymap.set(m.mode or "n", m[1], m[2], opts)
-  end
-
-  wk.add({
+    -- Group labels
     { "<leader>l", group = "LSP" },
     { "<leader>lw", group = "Workspace" },
-  })
+  }
+
+  wk.add(mappings, { buffer = bufnr })
 end
 
 -- ---------------------------------------------------------------------------
@@ -61,7 +52,7 @@ end
 -- ---------------------------------------------------------------------------
 local function on_attach(client, bufnr)
   register_lsp_keys(bufnr)
-  if client.server_capabilities.inlayHintProvider then
+  if client.supports_method("textDocument/inlayHint") then
     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
   end
 end
@@ -77,6 +68,7 @@ end)
 -------------------------------------------------------------------------------
 
 -- Lua
+vim.lsp.enable("lua_ls")
 vim.lsp.config("lua_ls", {
   on_attach = on_attach,
   capabilities = capabilities,
@@ -92,6 +84,7 @@ vim.lsp.config("lua_ls", {
 })
 
 -- Go
+vim.lsp.enable("gopls")
 vim.lsp.config("gopls", {
   on_attach = on_attach,
   capabilities = capabilities,
@@ -101,6 +94,7 @@ vim.lsp.config("gopls", {
 })
 
 -- SQL
+vim.lsp.enable("sqlls")
 vim.lsp.config("sqlls", {
   on_attach = on_attach,
   capabilities = capabilities,
@@ -108,6 +102,7 @@ vim.lsp.config("sqlls", {
 })
 
 -- OCaml
+vim.lsp.enable("ocamllsp")
 vim.lsp.config("ocamllsp", {
   on_attach = on_attach,
   capabilities = capabilities,
@@ -115,6 +110,7 @@ vim.lsp.config("ocamllsp", {
 })
 
 -- HTML
+vim.lsp.enable("html")
 vim.lsp.config("html", {
   on_attach = on_attach,
   capabilities = capabilities,
@@ -122,6 +118,7 @@ vim.lsp.config("html", {
 })
 
 -- Apex
+vim.lsp.enable("apex_ls")
 vim.lsp.config("apex_ls", {
   on_attach = on_attach,
   capabilities = capabilities,
@@ -129,6 +126,7 @@ vim.lsp.config("apex_ls", {
 })
 
 -- Templ
+vim.lsp.enable("templ")
 vim.lsp.config("templ", {
   on_attach = on_attach,
   capabilities = capabilities,
@@ -136,36 +134,42 @@ vim.lsp.config("templ", {
 })
 
 -- PHP
+vim.lsp.enable("intelephense")
 vim.lsp.config("intelephense", {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- Odin
+vim.lsp.enable("ols")
 vim.lsp.config("ols", {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- Nix
+vim.lsp.enable("nil_ls")
 vim.lsp.config("nil_ls", {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- Terraform
+vim.lsp.enable("terraformls")
 vim.lsp.config("terraformls", {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- Cypher
+vim.lsp.enable("cypher_ls")
 vim.lsp.config("cypher_ls", {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- Volar (Vue)
+vim.lsp.enable("volar")
 vim.lsp.config("volar", {
   on_attach = on_attach,
   capabilities = capabilities,
@@ -175,18 +179,21 @@ vim.lsp.config("volar", {
 })
 
 -- Gleam
+vim.lsp.enable("gleam")
 vim.lsp.config("gleam", {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- YAML
+vim.lsp.enable("yamlls")
 vim.lsp.config("yamlls", {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- TailwindCSS (default + gleam)
+vim.lsp.enable("tailwindcss")
 vim.lsp.config("tailwindcss", {
   on_attach = on_attach,
   capabilities = capabilities,
@@ -217,8 +224,3 @@ vim.lsp.config("tailwindcss", {
     },
   },
 })
-
--------------------------------------------------------------------------------
--- Start All Configured LSPs
--------------------------------------------------------------------------------
-vim.lsp.start()
