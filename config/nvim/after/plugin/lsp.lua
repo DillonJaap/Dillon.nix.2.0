@@ -1,57 +1,53 @@
--- Modern, best-practice Neovim LSP configuration
-local lspconfig = require("lspconfig")
+-------------------------------------------------------------------------------
+-- Modern Neovim (0.10+) Lazy-Free LSP Setup using vim.lsp.config()
+-------------------------------------------------------------------------------
+
 local wk = require("which-key")
 
---------------------------------------------------------------------------------
--- Helper to register LSP keymaps
---------------------------------------------------------------------------------
+-- ---------------------------------------------------------------------------
+-- Helper: LSP keymaps
+-- ---------------------------------------------------------------------------
 local function register_lsp_keys(bufnr)
   local opts = { buffer = bufnr, noremap = true, silent = true }
 
   local mappings = {
     -- Diagnostics
-    { key = "[d", fn = vim.diagnostic.goto_prev, desc = "Prev Diagnostic" },
-    { key = "]d", fn = vim.diagnostic.goto_next, desc = "Next Diagnostic" },
-    { key = "<leader>e", fn = vim.diagnostic.open_float, desc = "Line Diagnostics" },
-    { key = "<leader>lq", fn = vim.diagnostic.setloclist, desc = "Send to Loclist" },
+    { "[d", vim.diagnostic.goto_prev, desc = "Prev Diagnostic" },
+    { "]d", vim.diagnostic.goto_next, desc = "Next Diagnostic" },
+    { "<leader>e", vim.diagnostic.open_float, desc = "Line Diagnostics" },
+    { "<leader>lq", vim.diagnostic.setloclist, desc = "Send to Loclist" },
 
     -- LSP navigation
-    { key = "gD", fn = vim.lsp.buf.declaration, desc = "Go to Declaration" },
-    { key = "gd", cmd = "<cmd>Telescope lsp_definitions<cr>", desc = "Go to Definition" },
-    { key = "gi", cmd = "<cmd>Telescope lsp_implementations<cr>", desc = "Go to Implementation" },
-    { key = "gr", cmd = "<cmd>Telescope lsp_references<cr>", desc = "Go to References" },
-    { key = "gT", cmd = "<cmd>Telescope lsp_type_definitions<cr>", desc = "Go to Type Definition" },
+    { "gD", vim.lsp.buf.declaration, desc = "Go to Declaration" },
+    { "gd", "<cmd>Telescope lsp_definitions<cr>", desc = "Go to Definition" },
+    { "gi", "<cmd>Telescope lsp_implementations<cr>", desc = "Go to Implementation" },
+    { "gr", "<cmd>Telescope lsp_references<cr>", desc = "Go to References" },
+    { "gT", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Go to Type Definition" },
 
     -- Actions
-    { key = "<leader>lh", fn = vim.lsp.buf.signature_help, desc = "Signature Help" },
-    { key = "<leader>ln", fn = vim.lsp.buf.rename, desc = "Rename Symbol" },
-    { key = "<leader>la", fn = vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" } },
-    { key = "K", fn = vim.lsp.buf.hover, desc = "Hover Documentation" },
+    { "K", vim.lsp.buf.hover, desc = "Hover Documentation" },
+    { "<leader>lh", vim.lsp.buf.signature_help, desc = "Signature Help" },
+    { "<leader>ln", vim.lsp.buf.rename, desc = "Rename Symbol" },
+    { "<leader>la", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" } },
 
     -- Workspace
-    { key = "<leader>lwa", fn = vim.lsp.buf.add_workspace_folder, desc = "Add Workspace Folder" },
-    { key = "<leader>lwr", fn = vim.lsp.buf.remove_workspace_folder, desc = "Remove Workspace Folder" },
+    { "<leader>lwa", vim.lsp.buf.add_workspace_folder, desc = "Add Workspace Folder" },
+    { "<leader>lwr", vim.lsp.buf.remove_workspace_folder, desc = "Remove Workspace Folder" },
     {
-      key = "<leader>lwl",
-      fn = function()
-        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-      end,
+      "<leader>lwl",
+      function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
       desc = "List Workspace Folders",
     },
 
     -- Calls
-    { key = "<leader>lC", fn = vim.lsp.buf.incoming_calls, desc = "Incoming Calls" },
-    { key = "<leader>lO", fn = vim.lsp.buf.outgoing_calls, desc = "Outgoing Calls" },
-    { key = "<leader>lc", cmd = "<cmd>Telescope lsp_incoming_calls<cr>", desc = "Incoming Calls (Telescope)" },
-    { key = "<leader>lo", cmd = "<cmd>Telescope lsp_outgoing_calls<cr>", desc = "Outgoing Calls (Telescope)" },
+    { "<leader>lC", vim.lsp.buf.incoming_calls, desc = "Incoming Calls" },
+    { "<leader>lO", vim.lsp.buf.outgoing_calls, desc = "Outgoing Calls" },
+    { "<leader>lc", "<cmd>Telescope lsp_incoming_calls<cr>", desc = "Incoming Calls (Telescope)" },
+    { "<leader>lo", "<cmd>Telescope lsp_outgoing_calls<cr>", desc = "Outgoing Calls (Telescope)" },
   }
 
-  for _, map in ipairs(mappings) do
-    if map.cmd then
-      vim.keymap.set(map.mode or "n", map.key, map.cmd, opts)
-    else
-      vim.keymap.set(map.mode or "n", map.key, map.fn, opts)
-    end
+  for _, m in ipairs(mappings) do
+    vim.keymap.set(m.mode or "n", m[1], m[2], opts)
   end
 
   wk.add({
@@ -60,9 +56,9 @@ local function register_lsp_keys(bufnr)
   })
 end
 
---------------------------------------------------------------------------------
--- Common attach + capabilities
---------------------------------------------------------------------------------
+-- ---------------------------------------------------------------------------
+-- Common on_attach & capabilities
+-- ---------------------------------------------------------------------------
 local function on_attach(client, bufnr)
   register_lsp_keys(bufnr)
   if client.server_capabilities.inlayHintProvider then
@@ -70,18 +66,18 @@ local function on_attach(client, bufnr)
   end
 end
 
+-- nvim-cmp optional integration
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 pcall(function()
-  local cmp_nvim_lsp = require("cmp_nvim_lsp")
-  capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+  capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 end)
 
---------------------------------------------------------------------------------
--- Language servers
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+-- Language Servers
+-------------------------------------------------------------------------------
 
--- Lua (Neovim)
-lspconfig.lua_ls.setup({
+-- Lua
+vim.lsp.config("lua_ls", {
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
@@ -96,83 +92,81 @@ lspconfig.lua_ls.setup({
 })
 
 -- Go
-lspconfig.gopls.setup({
+vim.lsp.config("gopls", {
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
-    gopls = {
-      buildFlags = { "-tags=integration,e2e" },
-    },
+    gopls = { buildFlags = { "-tags=integration,e2e" } },
   },
 })
 
 -- SQL
-lspconfig.sqlls.setup({
+vim.lsp.config("sqlls", {
   on_attach = on_attach,
   capabilities = capabilities,
   filetypes = { "sql", "mysql", "sql.tmpl" },
 })
 
 -- OCaml
-lspconfig.ocamllsp.setup({
+vim.lsp.config("ocamllsp", {
   on_attach = on_attach,
   capabilities = capabilities,
   cmd = { "dune", "exec", "--", "ocamllsp" },
 })
 
 -- HTML
-lspconfig.html.setup({
+vim.lsp.config("html", {
   on_attach = on_attach,
   capabilities = capabilities,
   filetypes = { "html", "templ" },
 })
 
 -- Apex
-lspconfig.apex_ls.setup({
+vim.lsp.config("apex_ls", {
   on_attach = on_attach,
   capabilities = capabilities,
   filetypes = { "apexcode", "apex" },
 })
 
 -- Templ
-lspconfig.templ.setup({
+vim.lsp.config("templ", {
   on_attach = on_attach,
   capabilities = capabilities,
   filetypes = { "templ" },
 })
 
 -- PHP
-lspconfig.intelephense.setup({
+vim.lsp.config("intelephense", {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- Odin
-lspconfig.ols.setup({
+vim.lsp.config("ols", {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- Nix
-lspconfig.nil_ls.setup({
+vim.lsp.config("nil_ls", {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- Terraform
-lspconfig.terraformls.setup({
+vim.lsp.config("terraformls", {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- Cypher
-lspconfig.cypher_ls.setup({
+vim.lsp.config("cypher_ls", {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- Volar (Vue)
-lspconfig.volar.setup({
+vim.lsp.config("volar", {
   on_attach = on_attach,
   capabilities = capabilities,
   cmd = { "vue-language-server", "--stdio" },
@@ -181,31 +175,29 @@ lspconfig.volar.setup({
 })
 
 -- Gleam
-lspconfig.gleam.setup({
+vim.lsp.config("gleam", {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 -- YAML
-lspconfig.yamlls.setup({
+vim.lsp.config("yamlls", {
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
--- TailwindCSS (now includes "gleam" in filetypes)
--- TailwindCSS (default filetypes + gleam)
-lspconfig.tailwindcss.setup({
+-- TailwindCSS (default + gleam)
+vim.lsp.config("tailwindcss", {
   on_attach = on_attach,
   capabilities = capabilities,
   filetypes = {
     "aspnetcorerazor", "astro", "astro-markdown", "blade", "django-html",
-    "htmldjango", "edge", "eelixir", "elixir", "ejs", "erb", "eruby",
-    "gohtml", "haml", "handlebars", "hbs", "html", "htmlangular",
-    "html-eex", "heex", "jade", "leaf", "liquid", "markdown", "mdx",
-    "mustache", "njk", "nunjucks", "php", "razor", "slim", "twig",
-    "css", "less", "postcss", "sass", "scss", "stylus", "sugarss",
-    "javascript", "javascriptreact", "typescript", "typescriptreact",
-    "vue", "svelte", "gleam",
+    "htmldjango", "edge", "eelixir", "elixir", "ejs", "erb", "eruby", "gohtml",
+    "haml", "handlebars", "hbs", "html", "htmlangular", "html-eex", "heex",
+    "jade", "leaf", "liquid", "markdown", "mdx", "mustache", "njk", "nunjucks",
+    "php", "razor", "slim", "twig", "css", "less", "postcss", "sass", "scss",
+    "stylus", "sugarss", "javascript", "javascriptreact", "typescript",
+    "typescriptreact", "vue", "svelte", "gleam",
   },
   settings = {
     tailwindCSS = {
@@ -216,7 +208,6 @@ lspconfig.tailwindcss.setup({
           { "\\w+\\.class\\('([^']*)'\\)", "([^']*)" },
           { 'class\\("([^"]*)"\\)', '([^"]*)' },
           { "class\\('([^']*)'\\)", "([^']*)" },
-          -- multiline support
           { '\\w+\\.class\\([\\s\\n]*"([^"]*)"[\\s\\n,]*\\)', '([^"]*)' },
           { "\\w+\\.class\\([\\s\\n]*'([^']*)'[\\s\\n,]*\\)", "([^']*)" },
           { 'class\\([\\s\\n]*"([^"]*)"[\\s\\n,]*\\)', '([^"]*)' },
@@ -226,3 +217,8 @@ lspconfig.tailwindcss.setup({
     },
   },
 })
+
+-------------------------------------------------------------------------------
+-- Start All Configured LSPs
+-------------------------------------------------------------------------------
+vim.lsp.start()
