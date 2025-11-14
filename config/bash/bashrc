@@ -19,6 +19,7 @@ alias gitcc='git rev-parse HEAD | pbcopy'
 # MAC stuff
 if [[ $(uname -o) = "Darwin"  ]]; then
     export PATH=$PATH:/opt/homebrew/bin
+    export PATH=$PATH:/opt/homebrew/bin
 	#export ANDROID_SDK_ROOT="/opt/homebrew/share/android-commandlinetools"
 
     # AM Team stuff
@@ -29,6 +30,8 @@ export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH=$PATH:$ANDROID_HOME/emulator
+
+export PATH=$PATH:"$HOME/.opam/default/bin/dune"
 
 # Shell Prompt
 trimPWD()

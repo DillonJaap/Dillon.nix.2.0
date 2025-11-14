@@ -11,12 +11,8 @@ source ~/.bashrc
 test -r /Users/DJaap/.opam/opam-init/init.sh && . /Users/DJaap/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 test -r $HOME/.opam/opam-init/init.sh && . $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 
-# start X11 on linux
-#[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
-
 # Added by Toolbox App
 export PATH="$PATH:/Users/DJaap/Library/Application Support/JetBrains/Toolbox/scripts"
 export PATH="~/development/flutter/bin:$PATH"
 export PATH="$PATH:~/.local/bin"
 export PATH="$PATH:/run/current-system/sw/bin" # darwin-rebuild executable
-
