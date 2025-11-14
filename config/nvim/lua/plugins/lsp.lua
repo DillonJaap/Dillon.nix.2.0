@@ -2,7 +2,7 @@ return {
 	{ "neovim/nvim-lspconfig" }, -- Required
 	{
 		"mason-org/mason.nvim",
-		opts = {}
+		opts = {},
 		config = function() 
 			require("mason").setup()
 		end 
