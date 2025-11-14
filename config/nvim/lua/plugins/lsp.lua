@@ -1,8 +1,4 @@
 return {
-	{
-		"VonHeikemen/lsp-zero.nvim",
-		branch = "v2.x",
-	},
 	{ "neovim/nvim-lspconfig" }, -- Required
 	{
 		-- Optional
