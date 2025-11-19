@@ -194,6 +194,13 @@ vim.lsp.config("yamlls", {
 	capabilities = capabilities,
 })
 
+-- js/ts
+vim.lsp.enable("ts_ls")
+vim.lsp.config("ts_ls", {
+	on_attach = on_attach,
+	capabilities = capabilities,
+})
+
 -- TailwindCSS (default + gleam)
 vim.lsp.enable("tailwindcss")
 vim.lsp.config("tailwindcss", {
