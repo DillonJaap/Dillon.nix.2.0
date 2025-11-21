@@ -1,5 +1,5 @@
-local ls = require 'luasnip'
-local collection = require 'luasnip.session.snippet_collection'
+local ls = require("luasnip")
+local collection = require("luasnip.session.snippet_collection")
 --local types = require 'luasnip.util.types'
 
 local s = ls.s -- snippet creator
@@ -12,7 +12,7 @@ local d = ls.dynamic_node
 local fmt = require("luasnip.extras.fmt").fmt
 --local rep = require("luasnip.extras").rep
 
-local ts_locals = require('nvim-treesitter.locals')
+local ts_locals = require("nvim-treesitter.locals")
 local get_tsnode_text = vim.treesitter.get_node_text
 
 -- Clear go snippets
@@ -28,14 +28,8 @@ end
 local error_node = function(err)
 	local nodes = {}
 	table.insert(nodes, t(err))
-	table.insert(nodes, sn(nil, fmt(
-		'fmt.Errorf("{}: %w", {})',
-		{ i(1), t(err) }
-	)))
-	table.insert(nodes, sn(nil, fmt(
-		'fmt.Errorf("%w: %w", {}, {})',
-		{ i(1), t(err) }
-	)))
+	table.insert(nodes, sn(nil, fmt('fmt.Errorf("{}: %w", {})', { i(1), t(err) })))
+	table.insert(nodes, sn(nil, fmt('fmt.Errorf("%w: %w", {}, {})', { i(1), t(err) })))
 	return c(1, nodes)
 end
 
@@ -71,7 +65,7 @@ local nodes_from_tsnode = function(node, info)
 	for n in node:iter_children() do
 		if n:named() then
 			table.insert(tbl, node_from_tsnode(get_tsnode_text(n, 0), info))
-			table.insert(tbl, t ", ")
+			table.insert(tbl, t(", "))
 			pos = pos + 1
 		end
 	end
@@ -80,7 +74,8 @@ local nodes_from_tsnode = function(node, info)
 end
 
 local get_return_nodes = function(info)
-	local query = vim.treesitter.query.parse("go",
+	local query = vim.treesitter.query.parse(
+		"go",
 		[[
 			[
 				(method_declaration result: (_) @id)
@@ -96,9 +91,7 @@ local get_return_nodes = function(info)
 	local function_node
 
 	for _, v in ipairs(scope) do
-		if v:type() == "function_declaration"
-				or v:type() == "func_literal"
-				or v:type() == "method_declaration" then
+		if v:type() == "function_declaration" or v:type() == "func_literal" or v:type() == "method_declaration" then
 			function_node = v
 			break
 		end
@@ -150,9 +143,8 @@ local extractCapitalLetters = function(str)
 end
 
 -------------------------------------------------------------------------------
--- swagger snippets
+-- snippets
 -------------------------------------------------------------------------------
-
 ls.add_snippets("go", {
 	s(
 		"funct",
@@ -177,18 +169,24 @@ ls.add_snippets("go", {
 			{
 				i(1, "func"),
 				c(2, {
-					fmt([[
+					fmt(
+						[[
 					name string
 					wantErr error{1}
-					]], i(1)),
-					t "",
+					]],
+						i(1)
+					),
+					t(""),
 				}),
 				c(3, {
-					fmt([[
+					fmt(
+						[[
 					name: "Success",
 					wantErr: nil,{}
-					]], i(1)),
-					t "",
+					]],
+						i(1)
+					),
+					t(""),
 				}),
 				i(4),
 			}
@@ -208,57 +206,11 @@ ls.add_snippets("go", {
 			}
 		)
 	),
-	s(
-		"oass",
-		fmt(
-			[[
-			// {}
-			//
-			// swagger:model
-			]],
-			{
-				i(1, "CreateUpdateRequestWrapper represents a request to insert/update a beneficiary profile")
-			}
-		)
-	),
-	s(
-		"oase",
-		fmt(
-			[[
-			// swagger:route {} {} {} {}
-			// {}
-			//
-			// ---
-			// parameters:
-			// + name: {}
-			//   in: body
-			//   schema:
-			//     type: {}
-			//   required: true
-			// responses:
-			//  200: {}
-			// extensions:
-			//  x-meta-Classification: {}
-			]],
-			{
-				i(1, "POST"),
-				i(2, "/route/path"),
-				i(3, "interventions"),
-				i(4, "operationId"),
-				i(5, "description"),
-				i(6, "createUpdate"),
-				i(7, "CreateUpdateRequestWrapper"),
-				i(8, "CreateUpdateResponseWrapper"),
-				c(9, { t "Internal", t "External", t "Private", t "In Development" })
-
-			}
-		)
-	),
 	-------------------------------------------------------------------------------
 	-- CharaChorder snippets
 	-------------------------------------------------------------------------------
 	s(
-		{ trig = "function snippet ", name = "function snip", snippetType = "autosnippet" },
+		{ trig = "function snippet", name = "function snip", snippetType = "autosnippet" },
 		fmt(
 			[[
 			func {name}({parameters}) {return_}{{
@@ -276,7 +228,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "method snippet ", name = "method", snippetType = "autosnippet" },
+		{ trig = "method snippet", name = "method", snippetType = "autosnippet" },
 		fmt(
 			[[
 			func ({} {}) {}({}) {}{{
@@ -313,7 +265,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "while snippet ", name = "while", snippetType = "autosnippet" },
+		{ trig = "while snippet", name = "while", snippetType = "autosnippet" },
 		fmt(
 			[[
 			for {cond} {{
@@ -328,7 +280,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "range snippet ", name = "for range", snippetType = "autosnippet" },
+		{ trig = "range snippet", name = "for range", snippetType = "autosnippet" },
 		fmt(
 			[[
 			for {key}, {value} := range {var} {{
@@ -345,7 +297,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "if snippet ", name = "if", snippetType = "autosnippet" },
+		{ trig = "if snippet", name = "if", snippetType = "autosnippet" },
 		fmt(
 			[[
 			if {cond} {{
@@ -359,7 +311,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "else if snippet ", name = "else if", snippetType = "autosnippet" },
+		{ trig = "else if snippet", name = "else if", snippetType = "autosnippet" },
 		fmt(
 			[[
 			else if {} {{
@@ -373,7 +325,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "else snippet ", name = "else", snippetType = "autosnippet" },
+		{ trig = "else snippet", name = "else", snippetType = "autosnippet" },
 		fmt(
 			[[
 			else {{
@@ -387,7 +339,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "if error ", name = "if err != nil", snippetType = "autosnippet" },
+		{ trig = "if error", name = "if err != nil", snippetType = "autosnippet" },
 		fmt(
 			[[
 			if {1} != nil {{
@@ -405,7 +357,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "struct snippet ", name = "struct", snippetType = "autosnippet" },
+		{ trig = "struct snippet", name = "struct", snippetType = "autosnippet" },
 		fmt(
 			[[
 			type {} struct {{
@@ -421,7 +373,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "interface snippet ", name = "interface", snippetType = "autosnippet" },
+		{ trig = "interface snippet", name = "interface", snippetType = "autosnippet" },
 		fmt(
 			[[
 			type {} interface {{
@@ -437,7 +389,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "fmt error ", name = "Errorf", snippetType = "autosnippet" },
+		{ trig = "fmt error", name = "Errorf", snippetType = "autosnippet" },
 		fmt(
 			[[
 			fmt.Errorf({}){}
@@ -452,7 +404,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "test error ", name = "test Errorf", snippetType = "autosnippet" },
+		{ trig = "test error", name = "test Errorf", snippetType = "autosnippet" },
 		fmt(
 			[[
 			t.Errorf({}){}
@@ -467,7 +419,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "test fatal ", name = "test Fatalf", snippetType = "autosnippet" },
+		{ trig = "test fatal", name = "test Fatalf", snippetType = "autosnippet" },
 		fmt(
 			[[
 			t.Fatalf({}){}
@@ -482,7 +434,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "fmt print ", name = "Printf", snippetType = "autosnippet" },
+		{ trig = "fmt print", name = "Printf", snippetType = "autosnippet" },
 		fmt(
 			[[
 			fmt.Printf({}){}
@@ -497,7 +449,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "fmt string ", name = "Sprintf", snippetType = "autosnippet" },
+		{ trig = "fmt string", name = "Sprintf", snippetType = "autosnippet" },
 		fmt(
 			[[
 			fmt.Sprintf({}){}
@@ -512,7 +464,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "fprintf~~ ", name = "Fprintf", snippetType = "autosnippet" },
+		{ trig = "fmt file", name = "Fprintf", snippetType = "autosnippet" },
 		fmt(
 			[[
 			fmt.fprintf({}){}
@@ -527,7 +479,7 @@ ls.add_snippets("go", {
 		)
 	),
 	s(
-		{ trig = "println~~ ", name = "Println", snippetType = "autosnippet" },
+		{ trig = "print line", name = "Println", snippetType = "autosnippet" },
 		fmt(
 			[[
 			fmt.Println({}){}
