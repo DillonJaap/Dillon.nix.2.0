@@ -16,6 +16,8 @@ return {
 				go = { "gopls", "goimports", "goimports-revisor", stop_after_first = false },
 				odin = { "odinfmt" },
 				nix = { "nixpkgs-fmt" },
+				ocaml = { "ocamlformat" },
+				json = { "prettier" },
 			},
 		})
 	end,

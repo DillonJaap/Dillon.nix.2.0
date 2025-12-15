@@ -108,7 +108,7 @@ vim.lsp.enable("ocamllsp")
 vim.lsp.config("ocamllsp", {
 	on_attach = on_attach,
 	capabilities = capabilities,
-	cmd = { "dune", "exec", "--", "ocamllsp" },
+	-- cmd = { "dune", "exec", "--", "ocamllsp", "||", "ocamllsp" },
 })
 
 -- HTML
@@ -128,12 +128,12 @@ vim.lsp.config("apex_ls", {
 })
 
 -- Templ
-vim.lsp.enable("templ")
-vim.lsp.config("templ", {
-	on_attach = on_attach,
-	capabilities = capabilities,
-	filetypes = { "templ" },
-})
+-- vim.lsp.enable("templ")
+-- vim.lsp.config("templ", {
+-- 	on_attach = on_attach,
+-- 	capabilities = capabilities,
+-- 	filetypes = { "templ" },
+-- })
 
 -- PHP
 vim.lsp.enable("intelephense")
@@ -190,6 +190,13 @@ vim.lsp.config("gleam", {
 -- YAML
 vim.lsp.enable("yamlls")
 vim.lsp.config("yamlls", {
+	on_attach = on_attach,
+	capabilities = capabilities,
+})
+
+-- Nushell
+vim.lsp.enable("nushell")
+vim.lsp.config("nushell", {
 	on_attach = on_attach,
 	capabilities = capabilities,
 })

@@ -1,5 +1,6 @@
 local wk = require("which-key")
 local Terminal = require("toggleterm.terminal").Terminal
+require("toggleterm").setup({ shell = vim.o.shell }) -- have to put this here for some reason
 
 -------------------------------------------------------------------------------
 -- Functions
@@ -137,7 +138,7 @@ wk.add({
 
 -- define terminals
 local float_term = Terminal:new({ direction = "float" })
-local tab_term = Terminal:new({ direction = "tab" })
+local tab_term = Terminal:new({ direction = "tab", shell = vim.o.shell })
 
 -- terminal
 wk.add({
