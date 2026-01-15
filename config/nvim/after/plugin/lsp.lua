@@ -207,6 +207,11 @@ vim.lsp.config("ts_ls", {
 	on_attach = on_attach,
 	capabilities = capabilities,
 })
+vim.lsp.enable("eslint")
+vim.lsp.config("eslint", {
+	on_attach = on_attach,
+	capabilities = capabilities,
+})
 
 -- TailwindCSS (default + gleam)
 vim.lsp.enable("tailwindcss")
